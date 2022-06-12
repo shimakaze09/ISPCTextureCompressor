@@ -53,6 +53,6 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Android")
 ENDIF()
 
 # common options for ispc
-SET(ISPC_OPTIONS ${ISPC_OPTIONS} -O2 --pic)
+SET(ISPC_OPTIONS ${ISPC_OPTIONS} -O2  --opt=fast-math --pic)
 
 add_subdirectory(ispc_texcomp)
