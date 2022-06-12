@@ -1,4 +1,4 @@
-add_library(ispc_texcomp ispc_texcomp.cpp ispc_texcomp_astc.cpp kernel_astc.ispc kernel.ispc)
+add_library(ispc_texcomp ispc_texcomp.cpp ispc_texcomp_astc.cpp kernel_ispc.o kernel_astc_ispc.o)
 
 set(FUNCTIONS kernel_astc kernel)
 
