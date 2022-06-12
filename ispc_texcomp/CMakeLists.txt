@@ -1,0 +1,22 @@
+add_library(ispc_texcomp ispc_texcomp.cpp ispc_texcomp_astc.cpp kernel_astc.ispc kernel.ispc)
+
+set(FUNCTIONS kernel_astc kernel)
+
+foreach(FUNC IN LISTS FUNCTIONS)
+add_custom_command(OUTPUT ${FUNC}_ispc.o
+    COMMAND ${CMAKE_COMMAND} -E env "PATH=${ISPC_COMPILER_PATH}" ${ISPC_COMPILER} ${ISPC_OPTIONS} -o ${FUNC}_ispc.o ${CMAKE_CURRENT_SOURCE_DIR}/${FUNC}.ispc
+    MAIN_DEPENDENCY ${CMAKE_CURRENT_SOURCE_DIR}/${FUNC}.ispc
+    COMMENT "Building ${FUNC}"
+    )
+
+target_link_libraries(ispc_texcomp ${FUNC}_ispc.o)
+endforeach(FUNC)
+
+set_target_properties(ispc_texcomp
+PROPERTIES PUBLIC_HEADER ispc_texcomp.h
+)
+
+install(TARGETS ispc_texcomp
+    ARCHIVE DESTINATION ${CMAKE_SYSTEM_NAME}/lib
+    PUBLIC_HEADER DESTINATION ${CMAKE_SYSTEM_NAME}/include
+)
