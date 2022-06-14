@@ -1,6 +1,17 @@
 cmake_minimum_required (VERSION 3.20) 
 project(ISPCTextureCompressor)
 
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
+include(TargetArchDetect)
+
+target_architecture(TARGET_ARCH)
+
+if((TARGET_ARCH MATCHES "x86_64" OR TARGET_ARCH MATCHES "ia64") AND NOT OF_32BIT)
+        set(ARCH_BIT 64)
+else()
+        set(ARCH_BIT 32)
+endif()
+
 IF(${CMAKE_HOST_SYSTEM_NAME} MATCHES "Windows")
     SET(ISPC_COMPILER_PATH ${PROJECT_SOURCE_DIR}/../../Windows/bin/)
     SET(ISPC_COMPILER ispc.exe)
